@@ -6,7 +6,7 @@ import encryption
 
 
 def callback(en_input, en_result, fn):
-    fn()
+    fn(en_input)
 
 
 def GUI():

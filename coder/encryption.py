@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
+from tkinter import *
 def Base64_encode():
     print('Base64_encode')
 
@@ -50,8 +50,8 @@ def UTF7_decode():
     print('UTF7_decode')
 
 
-def Unicode():
-    print('Unicode')
+def Unicode(input):
+    print(input.get('0'))
 
 
 def MD5():
