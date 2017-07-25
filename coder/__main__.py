@@ -3,4 +3,4 @@
 
 import coder
 
-coder.GUI()
+coder.main()
