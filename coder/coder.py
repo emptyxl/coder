@@ -3,7 +3,7 @@
 
 import wx
 from UI import UI
-
+''
 
 def main():
     app = wx.App()

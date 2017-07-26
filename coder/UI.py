@@ -3,13 +3,13 @@
 
 import wx
 import base64
-import urllib
-
+import urllib.parse
+import json
 
 class UI(wx.Frame):
     def __init__(self, parent, title):
 
-        wx.Frame.__init__(self, parent, title=title, size=(600, 450))
+        wx.Frame.__init__(self, parent, title=title, size=(600, 500))
 
         # define sizers
         self.sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -66,6 +66,14 @@ class UI(wx.Frame):
 
         button = wx.Button(self, -1, 'URLDecode')
         button.Bind(wx.EVT_BUTTON, self.URLDecode)
+        self.sizer_btn.Add(button, 1, wx.EXPAND)
+
+        button = wx.Button(self, -1, 'URLJSONEncode')
+        button.Bind(wx.EVT_BUTTON, self.URLJSONEncode)
+        self.sizer_btn.Add(button, 1, wx.EXPAND)
+
+        button = wx.Button(self, -1, 'URLJSONDecode')
+        button.Bind(wx.EVT_BUTTON, self.URLJSONDecode)
         self.sizer_btn.Add(button, 1, wx.EXPAND)
 
         button = wx.Button(self, -1, 'HTMLEncode')
@@ -155,10 +163,20 @@ class UI(wx.Frame):
 
     def URLEncode(self, event):
         content = self.text_input.GetValue()
-        self.text_result.SetValue(urllib.parse.quote(content))
+        self.text_result.SetValue(urllib.parse.quote(content,safe=''))
 
     def URLDecode(self, event):
-        pass
+        content = self.text_input.GetValue()
+        self.text_result.SetValue(urllib.parse.unquote(content))
+
+    def URLJSONEncode(self, event):
+        content = self.text_input.GetValue()
+        json_content = json.loads(content)
+        self.text_result.SetValue(urllib.parse.urlencode(json_content))
+
+    def URLJSONDecode(self, event):
+        content = self.text_input.GetValue()
+        self.text_result.SetValue(str(urllib.parse.parse_qs(content)))
 
     def HTMLEncode(self, event):
         pass
