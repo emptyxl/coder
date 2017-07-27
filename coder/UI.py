@@ -266,7 +266,9 @@ class UI(wx.Frame):
             bytes(content, encoding='utf-8')).hexdigest())
 
     def AsciiTable(self, event):
-        table_name = 'ascii-table.png'
+        dirname = os.path.dirname(os.path.realpath(__file__))
+        
+        table_name = os.path.join(dirname,'ascii-table.png')
         if sys.platform == "win32":
             os.startfile(table_name)
         else:

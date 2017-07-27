@@ -11,7 +11,7 @@ def long_description():
 
 setup(
     name='coder',
-    version='1.0.4',
+    version='1.0.5',
     description='A graphical interface tool, integrated web encoding/decoding method, hash method and the ASCII table.',
     # long_description='More information you can see: https://github.com/emptyxl/coder',
     long_description=long_description(),
