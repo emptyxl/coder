@@ -6,7 +6,7 @@ from setuptools import setup
 
 setup(
     name='coder',
-    version='0.9.0',
+    version='1.0.0',
     description='A graphical interface tool, integrated web encoding/decoding method, hash method and the ASCII table.',
     long_description='More information you can see: https://github.com/emptyxl/coder',
     classifiers=[
