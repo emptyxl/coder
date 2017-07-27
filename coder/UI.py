@@ -5,11 +5,22 @@ import wx
 import base64
 import urllib.parse
 import json
+import html
+import hashlib
+import os
+import sys
+import subprocess
+
 
 class UI(wx.Frame):
+    """
+    A graphical interface tool, integrated web encoding/decoding method,
+    hash method and the ASCII table.
+    """
+
     def __init__(self, parent, title):
 
-        wx.Frame.__init__(self, parent, title=title, size=(600, 500))
+        wx.Frame.__init__(self, parent, title=title, size=(600, 550))
 
         # define sizers
         self.sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -84,12 +95,16 @@ class UI(wx.Frame):
         button.Bind(wx.EVT_BUTTON, self.HTMLDecode)
         self.sizer_btn.Add(button, 1, wx.EXPAND)
 
-        button = wx.Button(self, -1, 'JSStringEncode')
-        button.Bind(wx.EVT_BUTTON, self.JSStringEncode)
+        button = wx.Button(self, -1, 'PyString')
+        button.Bind(wx.EVT_BUTTON, self.PyString)
         self.sizer_btn.Add(button, 1, wx.EXPAND)
 
-        button = wx.Button(self, -1, 'JSStringDecode')
-        button.Bind(wx.EVT_BUTTON, self.JSStringDecode)
+        button = wx.Button(self, -1, 'Dec to Hex')
+        button.Bind(wx.EVT_BUTTON, self.Dec2HEX)
+        self.sizer_btn.Add(button, 1, wx.EXPAND)
+
+        button = wx.Button(self, -1, 'Hex to Dec')
+        button.Bind(wx.EVT_BUTTON, self.Hex2Dec)
         self.sizer_btn.Add(button, 1, wx.EXPAND)
 
         button = wx.Button(self, -1, 'UTF7Encode')
@@ -118,6 +133,10 @@ class UI(wx.Frame):
 
         button = wx.Button(self, -1, 'SHA512')
         button.Bind(wx.EVT_BUTTON, self.SHA512)
+        self.sizer_btn.Add(button, 1, wx.EXPAND)
+
+        button = wx.Button(self, -1, 'Ascii Table')
+        button.Bind(wx.EVT_BUTTON, self.AsciiTable)
         self.sizer_btn.Add(button, 1, wx.EXPAND)
 
         # Layout sizers
@@ -163,7 +182,7 @@ class UI(wx.Frame):
 
     def URLEncode(self, event):
         content = self.text_input.GetValue()
-        self.text_result.SetValue(urllib.parse.quote(content,safe=''))
+        self.text_result.SetValue(urllib.parse.quote(content, safe=''))
 
     def URLDecode(self, event):
         content = self.text_input.GetValue()
@@ -179,34 +198,77 @@ class UI(wx.Frame):
         self.text_result.SetValue(str(urllib.parse.parse_qs(content)))
 
     def HTMLEncode(self, event):
-        pass
+        content = self.text_input.GetValue()
+        self.text_result.SetValue(html.escape(content))
 
     def HTMLDecode(self, event):
-        pass
+        content = self.text_input.GetValue()
+        self.text_result.SetValue(html.unescape(content))
 
-    def JSStringEncode(self, event):
-        pass
+    def PyString(self, event):
+        content = self.text_input.GetValue()
+        result = content.replace('\'', r'\'').replace('\"', r'\"').replace(
+            '\a', r'\a').replace('\b', r'\b').replace('\n', r'\n').replace(
+            '\t', r'\t').replace('\v', r'\v').replace('\r', r'\r').replace(
+            '\f', r'\f')
+        self.text_result.SetValue(result)
 
-    def JSStringDecode(self, event):
-        pass
+    def Dec2HEX(self, event):
+        content = self.text_input.GetValue()
+        figures = content.split(' ')
+        result = ' '
+        figure_list = []
+        for figure in figures:
+            figure_list.append(str(hex(int(figure))))
+        self.text_result.SetValue(result.join(figure_list))
+
+    def Hex2Dec(self, event):
+        content = self.text_input.GetValue()
+        figures = content.split(' ')
+        result = ' '
+        figure_list = []
+        for figure in figures:
+            figure_list.append(str(int(figure, 16)))
+        self.text_result.SetValue(result.join(figure_list))
 
     def UTF7Encode(self, event):
-        pass
+        content = self.text_input.GetValue()
+        self.text_result.SetValue(content.encode('utf-7'))
 
     def UTF7Decode(self, event):
-        pass
+        content = self.text_input.GetValue()
+        self.text_result.SetValue(
+            str(bytes(content, encoding='utf-8'), encoding='utf-7'))
 
     def MD5(self, event):
-        pass
+        content = self.text_input.GetValue()
+        self.text_result.SetValue(hashlib.md5(
+            bytes(content, encoding='utf-8')).hexdigest())
 
     def SHA1(self, event):
-        pass
+        content = self.text_input.GetValue()
+        self.text_result.SetValue(hashlib.sha1(
+            bytes(content, encoding='utf-8')).hexdigest())
 
     def SHA256(self, event):
-        pass
+        content = self.text_input.GetValue()
+        self.text_result.SetValue(hashlib.sha256(
+            bytes(content, encoding='utf-8')).hexdigest())
 
     def SHA384(self, event):
-        pass
+        content = self.text_input.GetValue()
+        self.text_result.SetValue(hashlib.sha384(
+            bytes(content, encoding='utf-8')).hexdigest())
 
     def SHA512(self, event):
-        pass
+        content = self.text_input.GetValue()
+        self.text_result.SetValue(hashlib.sha512(
+            bytes(content, encoding='utf-8')).hexdigest())
+
+    def AsciiTable(self, event):
+        table_name = 'ascii-table.png'
+        if sys.platform == "win32":
+            os.startfile(table_name)
+        else:
+            opener = "open" if sys.platform == "darwin" else "xdg-open"
+            subprocess.call([opener, table_name])

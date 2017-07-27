@@ -3,11 +3,11 @@
 
 import wx
 from UI import UI
-''
+
 
 def main():
     app = wx.App()
-    frame = UI(None, "encode-decode")
+    UI(None, "encode-decode")
     app.MainLoop()
 
 

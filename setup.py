@@ -6,27 +6,26 @@ from setuptools import setup
 
 setup(
     name='coder',
-    version='0.0.1',
-    description='A universal encoder/decoder written in Python, supports common encoding formats.',
-    long_description='More information you can see: https://github.com/emptyxl/encoder-decoder',
+    version='0.9.0',
+    description='A graphical interface tool, integrated web encoding/decoding method, hash method and the ASCII table.',
+    long_description='More information you can see: https://github.com/emptyxl/coder',
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
         'Topic :: Utilities'
     ],
-    keywords='python encdoer decoder common encoding formats',
+    keywords='encdoer decoder encoding decoding ',
     author='empty_xl',
     author_email='empty_xl@163.com',
     license='MIT',
     packages=['coder'],
-    url='https://github.com/emptyxl/encoder-decoder',
+    url='https://github.com/emptyxl/coder',
     install_requires=[
-        # 'Pillow',
-        # 'docopt'
+        'wxPython'
     ],
     entry_points={
         'console_scripts': [
-            'coder = coder.coder:GUI'
+            'coder = coder.coder:main'
         ]
     },
 )
