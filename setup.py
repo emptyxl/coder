@@ -11,9 +11,8 @@ def long_description():
 
 setup(
     name='coder',
-    version='1.0.5',
+    version='1.0.6',
     description='A graphical interface tool, integrated web encoding/decoding method, hash method and the ASCII table.',
-    # long_description='More information you can see: https://github.com/emptyxl/coder',
     long_description=long_description(),
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -24,8 +23,11 @@ setup(
     author='empty_xl',
     author_email='empty_xl@163.com',
     license='MIT',
-    packages=['coder'],
     url='https://github.com/emptyxl/coder',
+    packages=['coder'],
+    package_data={
+        'coder': ['ascii-table.png'],
+    },
     install_requires=[
         'wxPython'
     ],
