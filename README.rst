@@ -11,13 +11,13 @@ You can use ``pip`` to install this module:
 
 .. code:: python
 
-    pip install coder
+    pip3 install coder
 
 Or download the source code and manual installation:
 
 .. code:: python
 
-    python setup.py install
+    python3 setup.py install
 
 Usage
 -----
@@ -26,7 +26,7 @@ You can directly use this module as script
 
 .. code:: shell
 
-    python -m coder
+    python3 -m coder
 
 | The main interface below:
 | |main interface|
